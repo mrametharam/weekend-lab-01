@@ -29,7 +29,7 @@ var queueArgs = new Dictionary<string, object?>
 // Declare the queue to connect to.
 await channel.QueueDeclareAsync(
     queue: "hello",
-    durable: false,
+    durable: true,
     exclusive: false,
     autoDelete: false,
     arguments: queueArgs);
