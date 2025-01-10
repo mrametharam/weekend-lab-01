@@ -33,6 +33,7 @@ var queueArgs = new Dictionary<string, object?>
     { "x-message-ttl", 20000 }    // TTL
 };
 
+
 // Declare the queue to connect to. [https://www.rabbitmq.com/client-libraries/dotnet-api-guide#exchanges-and-queues]
 await channel.QueueDeclareAsync(
     queue: "hello",
@@ -47,7 +48,7 @@ var deadLetterArgs = new Dictionary<string, object?>
 {
     { "x-dead-letter-exchange", "dlx" },
     { "x-dead-letter-routing-key", "orig_routing_key" }
-    //{ "x-message-ttl", 15000 }    // TTL      // Remove the TTL to keep the message in the queue.
+    { "x-message-ttl", 15000 }    // TTL      // Remove the TTL to keep the message in the queue.
 };
 
 // Declare the DLX queue. [https://www.rabbitmq.com/dlx.html]
