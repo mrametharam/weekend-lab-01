@@ -47,7 +47,7 @@ await channel.QueueDeclareAsync(
 var deadLetterArgs = new Dictionary<string, object?>
 {
     { "x-dead-letter-exchange", "dlx" },
-    { "x-dead-letter-routing-key", "orig_routing_key" }
+    { "x-dead-letter-routing-key", "orig_routing_key" },
     { "x-message-ttl", 15000 }    // TTL      // Remove the TTL to keep the message in the queue.
 };
 
