@@ -29,10 +29,16 @@ var queueArgs = new Dictionary<string, object?>
 // Declare the queue to connect to.
 await channel.QueueDeclareAsync(
     queue: "hello",
-    durable: false,
+    durable: true,
     exclusive: false,
     autoDelete: false,
     arguments: queueArgs);
+
+
+// Set the prefetch count. [https://www.rabbitmq.com/consumer-prefetch.html, https://www.rabbitmq.com/tutorials/tutorial-two-dotnet#fair-dispatch]
+// This tells RabbitMQ not to give more than one message to a worker at a time.
+await channel.BasicQosAsync(prefetchSize: 0, prefetchCount: 1, global: false);
+
 
 Console.WriteLine(" [*] Waiting for messages.");
 

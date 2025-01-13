@@ -33,10 +33,11 @@ var queueArgs = new Dictionary<string, object?>
     { "x-message-ttl", 20000 }    // TTL
 };
 
+
 // Declare the queue to connect to. [https://www.rabbitmq.com/client-libraries/dotnet-api-guide#exchanges-and-queues]
 await channel.QueueDeclareAsync(
     queue: "hello",
-    durable: false,
+    durable: true,
     exclusive: false,
     autoDelete: false,
     arguments: queueArgs);
@@ -47,13 +48,13 @@ var deadLetterArgs = new Dictionary<string, object?>
 {
     { "x-dead-letter-exchange", "dlx" },
     { "x-dead-letter-routing-key", "orig_routing_key" },
-    { "x-message-ttl", 15000 }    // TTL
+    { "x-message-ttl", 15000 }    // TTL      // Remove the TTL to keep the message in the queue.
 };
 
 // Declare the DLX queue. [https://www.rabbitmq.com/dlx.html]
 await channel.QueueDeclareAsync(
     queue: "dead_letter_queue",
-    durable: false,
+    durable: true,
     exclusive: false,
     autoDelete: false,
     arguments: deadLetterArgs
@@ -69,10 +70,11 @@ string message = $"Hello World! {DateTime.UtcNow} -";
 // Configure the properties. [https://www.rabbitmq.com/client-libraries/dotnet-api-guide#publishing]
 var prop = new BasicProperties()
 {
-    Expiration = "10000"    // Message expires in 10 seconds.
+    Expiration = "10000",    // Message expires in 10 seconds.
+    Persistent = true
 };
 
-for (int i = 0; i < 10; i++)
+for (int i = 0; i < 500_000; i++)
 {
     var body = Encoding.UTF8.GetBytes($"{message} {i}");
 
