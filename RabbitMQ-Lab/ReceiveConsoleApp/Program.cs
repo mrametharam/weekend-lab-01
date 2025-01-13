@@ -8,7 +8,7 @@ using System.Text;
 // Connect to the server. [https://www.rabbitmq.com/client-libraries/dotnet-api-guide#connecting]
 var factory = new ConnectionFactory()
 {
-    HostName = "localhost",
+    HostName = "rabbitmq",      //"10.88.0.8",  //"localhost",
     VirtualHost = "my_vhost",
     UserName = "admin",
     Password = "@dm1n123#",

@@ -79,7 +79,7 @@ for (int i = 0; i < 10; i++)
 
     // Send the message.
     await channel.BasicPublishAsync(
-        exchange: string.Empty,
+        exchange: string.Empty,     // Setting this to an empty string will send the message to the default exchange.
         routingKey: "hello",
         true,
         prop,
